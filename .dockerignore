@@ -1,0 +1,6 @@
+.cache/
+.vscode/
+dist/
+.env
+.DS_Store
+*.log

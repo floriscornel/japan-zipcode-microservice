@@ -1,0 +1,48 @@
+{
+  "name": "zipcode-japan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "dist-start": "node dist/app.js",
+    "serve": "nodemon src/app.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/*",
+      "openapi.yaml"
+    ],
+    "delay": 500
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "csv-parse": "^4.16.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.1",
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
+  }
+}

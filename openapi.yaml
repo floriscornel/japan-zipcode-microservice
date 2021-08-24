@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Zipcode Microservice
+  description: Zipcode API allowing querying of Japanese zipcodes. Data source is Japan Post.
+  version: 0.0.1
+externalDocs:
+  description: GraphQL Web UI
+  url: /graphql
+
+paths:
+  /address/{zipcode}:
+    get:
+      summary: Find address of zipcode
+      tags:
+        - Address API
+      parameters:
+        - in: path
+          name: zipcode
+          schema:
+            type: string
+          required: true
+          example: "111-0053"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  zipcode:
+                    type: string
+                  prefectureKana:
+                    type: string
+                  prefectureKanji:
+                    type: string
+                  cityKana:
+                    type: string
+                  cityKanji:
+                    type: string
+                  townKana:
+                    type: string
+                  townKanji:
+                    type: string
+                  govcode:
+                    type: string
+                example:
+                  zipcode: "104-0045"
+                  prefectureKana: ﾄｳｷｮｳﾄ
+                  prefectureKanji: 東京都
+                  cityKana: ﾁｭｳｵｳｸ
+                  cityKanji: 中央区
+                  townKana: ﾂｷｼﾞ
+                  townKanji: 築地
+                  govcode: "13102"
+        "404":
+          description: Failed to find resource
+  /health:
+    get:
+      summary: Checks health of the application
+      tags:
+        - Misc
+      responses:
+        "200":
+          description: Healthy
+        "500":
+          description: Not Healthy
