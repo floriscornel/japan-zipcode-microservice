@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>cornelfh/japan-zipcode-microservice</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+    <script>
+      let valid = /^[0-9]{1,3}-?[0-9]{0,4}$/;
+      let complete = /^[0-9]{3}-?[0-9]{4}$/;
+      function update(zip) {
+        var request = new XMLHttpRequest();
+        request.open("GET", "/address/" + zip, true);
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            outputElement.innerText = JSON.stringify(JSON.parse(request.responseText), null, 2);
+          } else {
+            outputElement.innerText = request.status;
+          }
+        };
+        request.send();
+      }
+      function allowInput(evt) {
+        var charCode = evt.which ? evt.which : evt.keyCode;
+        var newstr = zipcodeElement.value + evt.key;
+        if (complete.test(newstr)) {
+          update(newstr);
+        }
+        return valid.test(newstr);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>cornelfh/japan-zipcode-microservice</h1>
+        <br />
+        <div style="display: flex; justify-content: flex-start; height: 15em">
+          <div style="margin-right: 5em">
+            <label for="zipcode">Test API by entering ZIP:</label><br />
+            <input
+              autocomplete="off"
+              id="zipcode"
+              required
+              onkeypress="return allowInput(event)"
+              placeholder="Enter ZIP"
+            />
+            <br />
+            <p>e.g. 111-0053</p>
+            <p><a href="/docs">Browse API Docs (Swagger)</a></p>
+            <p><a href="/graphql">Explore GraphQL</a></p>
+            <p>
+              <a href="https://github.com/cornelfh/japan-zipcode-microservice">View on GitHub</a>
+            </p>
+          </div>
+          <div><pre id="output"></pre></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var zipcodeElement = document.getElementById("zipcode");
+      var outputElement = document.getElementById("output");
+    </script>
+  </body>
+</html>

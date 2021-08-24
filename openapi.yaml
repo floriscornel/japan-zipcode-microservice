@@ -45,14 +45,14 @@ paths:
                   govcode:
                     type: string
                 example:
-                  zipcode: "104-0045"
+                  zipcode: "111-0053"
                   prefectureKana: ﾄｳｷｮｳﾄ
                   prefectureKanji: 東京都
-                  cityKana: ﾁｭｳｵｳｸ
-                  cityKanji: 中央区
-                  townKana: ﾂｷｼﾞ
-                  townKanji: 築地
-                  govcode: "13102"
+                  cityKana: ﾀｲﾄｳｸ
+                  cityKanji: 台東区
+                  townKana: ｱｻｸｻﾊﾞｼ
+                  townKanji: 浅草橋
+                  govcode: "13106"
         "404":
           description: Failed to find resource
   /health:
