@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./data/download.sh
+RUN mkdir /app/data
 
 RUN npm install
 
-RUN npx tsc
+RUN npm run setup
 
 RUN npm install --production
 

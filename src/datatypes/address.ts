@@ -1,12 +1,21 @@
+export interface JpString {
+  kanji: string;
+  kana: string | null;
+  romaji: string | null;
+}
+
+export interface Office {
+  name: JpString;
+  street: string;
+}
+
 export interface Address {
   zipcode: string;
-  prefectureKana: string;
-  prefectureKanji: string;
-  cityKana: string;
-  cityKanji: string;
-  townKana: string;
-  townKanji: string;
+  prefecture: JpString;
+  city: JpString;
+  town: JpString;
   govcode: string;
+  office: null | Office;
 }
 
 export interface AddressQuery {
@@ -14,15 +23,24 @@ export interface AddressQuery {
 }
 
 export const addressSchema = `
+  type JpString {
+    kanji: String!
+    kana: String
+    romaji: String
+  }
+
+  type Office {
+    name: JpString!
+    street: String!
+  }
+
   type Address {
     zipcode: String!
-    prefectureKana: String
-    prefectureKanji: String
-    cityKana: String
-    cityKanji: String
-    townKana: String
-    townKanji: String
-    govcode: String
+    prefecture: JpString!
+    city: JpString!
+    town: JpString!
+    govcode: String!
+    office: Office
   }
 
   type Query {

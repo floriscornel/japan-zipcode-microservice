@@ -1,6 +1,7 @@
 .cache/
 .vscode/
 dist/
+data/
 .env
 .DS_Store
 *.log

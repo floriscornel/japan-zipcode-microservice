@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Zipcode Microservice
   description: Zipcode API allowing querying of Japanese zipcodes. Data source is Japan Post.
-  version: 0.0.1
+  version: 0.0.2
 externalDocs:
   description: GraphQL Web UI
   url: /graphql
@@ -26,33 +26,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  zipcode:
-                    type: string
-                  prefectureKana:
-                    type: string
-                  prefectureKanji:
-                    type: string
-                  cityKana:
-                    type: string
-                  cityKanji:
-                    type: string
-                  townKana:
-                    type: string
-                  townKanji:
-                    type: string
-                  govcode:
-                    type: string
-                example:
-                  zipcode: "111-0053"
-                  prefectureKana: ﾄｳｷｮｳﾄ
-                  prefectureKanji: 東京都
-                  cityKana: ﾀｲﾄｳｸ
-                  cityKanji: 台東区
-                  townKana: ｱｻｸｻﾊﾞｼ
-                  townKanji: 浅草橋
-                  govcode: "13106"
+                $ref: "#/components/schemas/Address"
+
         "404":
           description: Failed to find resource
   /health:
@@ -65,3 +40,53 @@ paths:
           description: Healthy
         "500":
           description: Not Healthy
+
+components:
+  schemas:
+    JpString:
+      type: object
+      properties:
+        kanji:
+          type: string
+          description: Kanji character string
+        kana:
+          type: string
+          description: Kana character string
+        romaji:
+          type: string
+          description: Romaji character string
+      required:
+        - kanji
+
+    Office:
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/JpString"
+        street:
+          type: string
+      required:
+        - name
+        - street
+
+    Address:
+      type: object
+      properties:
+        zipcode:
+          type: string
+        prefecture:
+          $ref: "#/components/schemas/JpString"
+        city:
+          $ref: "#/components/schemas/JpString"
+        town:
+          $ref: "#/components/schemas/JpString"
+        office:
+          $ref: "#/components/schemas/Office"
+        govcode:
+          type: string
+      required:
+        - zipcode
+        - prefecture
+        - city
+        - town
+        - govcode

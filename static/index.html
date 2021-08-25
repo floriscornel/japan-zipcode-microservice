@@ -15,9 +15,20 @@
       }
     </style>
     <script>
-      let valid = /^[0-9]{1,3}-?[0-9]{0,4}$/;
-      let complete = /^[0-9]{3}-?[0-9]{4}$/;
-      function update(zip) {
+      let complete = /^[\d]{7}$/;
+      current = "";
+      function updateZip() {
+        const zip = zipcodeElement.value.replace(/\D/g, "");
+        if (zip == current) {
+          zipcodeElement.style.backgroundColor = "lightgreen";
+          return;
+        }
+        if (!complete.test(zip)) {
+          zipcodeElement.style.backgroundColor = "lightgoldenrodyellow";
+          return;
+        }
+        zipcodeElement.style.backgroundColor = "lightgreen";
+        current = zip;
         var request = new XMLHttpRequest();
         request.open("GET", "/address/" + zip, true);
         request.onload = function () {
@@ -29,14 +40,6 @@
         };
         request.send();
       }
-      function allowInput(evt) {
-        var charCode = evt.which ? evt.which : evt.keyCode;
-        var newstr = zipcodeElement.value + evt.key;
-        if (complete.test(newstr)) {
-          update(newstr);
-        }
-        return valid.test(newstr);
-      }
     </script>
   </head>
   <body>
@@ -44,14 +47,14 @@
       <div class="jumbotron">
         <h1>cornelfh/japan-zipcode-microservice</h1>
         <br />
-        <div style="display: flex; justify-content: flex-start; height: 15em">
+        <div style="display: flex; justify-content: flex-start">
           <div style="margin-right: 5em">
             <label for="zipcode">Test API by entering ZIP:</label><br />
             <input
               autocomplete="off"
               id="zipcode"
               required
-              onkeypress="return allowInput(event)"
+              oninput="updateZip()"
               placeholder="Enter ZIP"
             />
             <br />
