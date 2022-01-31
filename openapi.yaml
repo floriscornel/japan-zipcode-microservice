@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Zipcode Microservice
+  description: Zipcode API allowing querying of Japanese zipcodes. Data source is Japan Post.
+  version: 0.0.2
+externalDocs:
+  description: GraphQL Web UI
+  url: /graphql
+
+paths:
+  /address/{zipcode}:
+    get:
+      summary: Find address of zipcode
+      tags:
+        - Address API
+      parameters:
+        - in: path
+          name: zipcode
+          schema:
+            type: string
+          required: true
+          example: "111-0053"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+
+        "404":
+          description: Failed to find resource
+  /health:
+    get:
+      summary: Checks health of the application
+      tags:
+        - Misc
+      responses:
+        "200":
+          description: Healthy
+        "500":
+          description: Not Healthy
+
+components:
+  schemas:
+    JpString:
+      type: object
+      properties:
+        kanji:
+          type: string
+          description: Kanji character string
+        kana:
+          type: string
+          description: Kana character string
+        romaji:
+          type: string
+          description: Romaji character string
+      required:
+        - kanji
+
+    Office:
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/JpString"
+        street:
+          type: string
+      required:
+        - name
+        - street
+
+    Address:
+      type: object
+      properties:
+        zipcode:
+          type: string
+        prefecture:
+          $ref: "#/components/schemas/JpString"
+        city:
+          $ref: "#/components/schemas/JpString"
+        town:
+          $ref: "#/components/schemas/JpString"
+        office:
+          $ref: "#/components/schemas/Office"
+        govcode:
+          type: string
+      required:
+        - zipcode
+        - prefecture
+        - city
+        - town
+        - govcode

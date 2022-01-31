@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>cornelfh/japan-zipcode-microservice</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        padding-top: 50px;
+      }
+    </style>
+    <script>
+      let complete = /^[\d]{7}$/;
+      current = "";
+      function updateZip() {
+        const zip = zipcodeElement.value.replace(/\D/g, "");
+        if (zip == current) {
+          zipcodeElement.style.backgroundColor = "lightgreen";
+          return;
+        }
+        if (!complete.test(zip)) {
+          zipcodeElement.style.backgroundColor = "lightgoldenrodyellow";
+          return;
+        }
+        zipcodeElement.style.backgroundColor = "lightgreen";
+        current = zip;
+        var request = new XMLHttpRequest();
+        request.open("GET", "/address/" + zip, true);
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            outputElement.innerText = JSON.stringify(JSON.parse(request.responseText), null, 2);
+          } else {
+            outputElement.innerText = request.status;
+          }
+        };
+        request.send();
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>cornelfh/japan-zipcode-microservice</h1>
+        <br />
+        <div style="display: flex; justify-content: flex-start">
+          <div style="margin-right: 5em">
+            <label for="zipcode">Test API by entering ZIP:</label><br />
+            <input
+              autocomplete="off"
+              id="zipcode"
+              required
+              oninput="updateZip()"
+              placeholder="Enter ZIP"
+            />
+            <br />
+            <p>e.g. 111-0053</p>
+            <p><a href="/docs">Browse API Docs (Swagger)</a></p>
+            <p><a href="/graphql">Explore GraphQL</a></p>
+            <p>
+              <a href="https://github.com/cornelfh/japan-zipcode-microservice">View on GitHub</a>
+            </p>
+          </div>
+          <div><pre id="output"></pre></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var zipcodeElement = document.getElementById("zipcode");
+      var outputElement = document.getElementById("output");
+    </script>
+  </body>
+</html>
