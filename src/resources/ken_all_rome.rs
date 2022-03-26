@@ -1,8 +1,7 @@
 use encoding_rs;
 use serde::{Deserialize, Serialize};
-use std::fs;
 use std::collections::HashMap;
-
+use std::fs;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Record {

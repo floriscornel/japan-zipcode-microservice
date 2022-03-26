@@ -13,6 +13,3 @@ pub struct Address {
     pub town: JpString,
     pub govcode: String,
 }
-
-
-

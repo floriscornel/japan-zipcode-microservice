@@ -1,10 +1,4 @@
 {
-    "cSpell.words": [
-        "govcode",
-        "romaji",
-        "rusqlite",
-        "stmtu",
-        "zipcode",
-        "zipstore"
-    ]
+  "editor.defaultFormatter": "matklad.rust-analyzer",
+  "editor.formatOnSave": true
 }
